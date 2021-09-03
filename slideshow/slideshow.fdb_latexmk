@@ -1,5 +1,5 @@
 # Fdb version 3
-["lualatex"] 1630646241 "slideshow.tex" "slideshow.pdf" "slideshow" 1630646243
+["lualatex"] 1630646415 "slideshow.tex" "slideshow.pdf" "slideshow" 1630646417
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1625441481 123160 8e770f8f9380aad0d011b390c9f816af ""
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmsans10-regular.luc" 1625442240 123475 fe100fa9d0b4429767071ada8bb3a68d ""
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmsans12-regular.luc" 1630645860 123982 ae0a6e0703ace431079008743ad546bf ""
@@ -212,15 +212,15 @@
   "/usr/local/texlive/2021/texmf-dist/tex/luatex/luaotfload/luaotfload.lua" 1621631105 13788 7d84439d2254ecfafc462aa76f790a5d ""
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1625442070 5184918 edc7760058d1085fc27d2bf72f6d6bd9 ""
   "/usr/local/texlive/2021/texmf-var/web2c/luahbtex/lualatex.fmt" 1625442188 3372226 e6ba45493a4f3fa828544220ded41daf ""
-  "slideshow.aux" 1630646243 2218 b3602e2d064050ec19092314bb05d60b "lualatex"
-  "slideshow.nav" 1630646243 1005 63f220fdf9060403739bd97fc1d712a3 "lualatex"
-  "slideshow.out" 1630646243 297 5131048a5a02aff5520c82c62ed2ee30 "lualatex"
-  "slideshow.tex" 1630646237 1670 a19119b50bb89b6be9e6b2c2407fa8b2 ""
+  "slideshow.aux" 1630646417 2218 b3602e2d064050ec19092314bb05d60b "lualatex"
+  "slideshow.nav" 1630646417 1005 63f220fdf9060403739bd97fc1d712a3 "lualatex"
+  "slideshow.out" 1630646417 297 5131048a5a02aff5520c82c62ed2ee30 "lualatex"
+  "slideshow.tex" 1630646394 1709 c6b462de8a68f80c3c9527eee0f9423a ""
   (generated)
+  "slideshow.pdf"
   "slideshow.out"
-  "slideshow.aux"
   "slideshow.toc"
   "slideshow.snm"
-  "slideshow.pdf"
-  "slideshow.log"
   "slideshow.nav"
+  "slideshow.aux"
+  "slideshow.log"
