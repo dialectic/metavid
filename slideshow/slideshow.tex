@@ -2,27 +2,33 @@
 \documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
 
 \usetheme{default}
+\usefonttheme[onlymath]{serif}
 
 \beamertemplatenavigationsymbolsempty
 
 \usepackage{hyperref}
-\usepackage{graphicx} % Allows including images
+\usepackage{graphicx}
+\usepackage[usexcolor=false]{svg}
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+% \usepackage{tikz}
+% \usepackage{pgfplots}
+
+\usepackage{slideshow}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
 % The title
-\title[short title]{Simple Beamer Theme}
-\subtitle{Subtitle}
+\title[short title]{Variables in System Dynamics}
+\subtitle{an introduction}
 
-\author[Pin-Yen] {Pin-Yen Huang}
-\institute[NTU] % Your institution may be shorthand to save space
+\author[Rico A.R.\ Picone] {Rico A.R.\ Picone}
+\institute[SMU] % Your institution may be shorthand to save space
 {
     % Your institution for the title page
-    Department of Computer Science and Information Engineering \\
-    National Taiwan University 
+    Department of Mechanical Engineering \\
+    Saint Martin's University
     \vskip 3pt
 }
 \date{\today} % Date, can be changed to a custom date
@@ -39,27 +45,320 @@
 \end{frame}
 
 %------------------------------------------------
-\section{Time-domain models}
 %------------------------------------------------
 
-\begin{frame}{Scalar ODE models}
-    
+\begin{frame}{Variables represent quantities}
+    \input{figures/simulating_state_space_response_04}
+    \note[itemize]{
+        \item In dynamic systems and elsewhere, we use mathematical variables to represent physical quantities that change through time.
+        \item Consider, for instance, an electronic system.
+        \item This plot shows two traces through time, one for voltage and the other for current.
+        \item The specific waveforms are determined by a number of things:
+        \item the specific voltage and current being represented,
+        \item the topology of the system,
+        \item the system's initial conditions.
+    }
 \end{frame}
 
-\begin{frame}{State-space models}
-    
+\begin{frame}{Power flow variables}
+    For instance,
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{i(t)}_{\text{current}} \underbrace{v(t)}_{\text{voltage}}.
+    \end{equation}
+    \note[itemize]{
+        \item Here is the definition of power in an electronic system: the product of current and voltage.
+        \item Power in all the domains we'll consider have the same form, the product of two variables.
+        \item In each energy domain, a pair of variables will be called the power flow variables, and their product will be the power.
+        \item The choice is not uniquely determined by their product being the power; however, there are common conventions we'll follow.
+    }
 \end{frame}
 
-%------------------------------------------------
-\section{Frequency-domain models}
-%------------------------------------------------
-
-\begin{frame}{Transfer function models}
-
+\begin{frame}{Through- and across-variables}
+    \begin{center}
+    \begin{tikzpicture}
+        % \coordinate (g) at (-2.5,0);
+        % \draw (g) pic {groundnode};
+        % \node[above,font=\footnotesize] at (g) {ground};
+        \node[graphnode] (n1) at (0,2) {};
+        \node[graphnode] (n2) at (0,0) {};
+        \draw[branch] (n1) to [bend left] (n2);
+        \draw[->,>=stealth',thick,color=mygreen,line cap=round,bend angle=22] (0,1.5) to[bend left] (0,.5);
+        \node[left=-3pt] at (0,1) {through-variable};
+        \draw[thick,color=mygreen,line cap=round]
+            ($(n1)+(.2,0)$) -- ++ (.6,0)
+            coordinate (n12) -- ++(.15,0);
+        \draw[thick,color=mygreen,line cap=round]
+            ($(n2)+(.2,0)$) -- ++ (.6,0)
+            coordinate (n22) -- ++(.15,0);
+        \draw[->,thick,color=mygreen,line cap=round,>=stealth']
+            (n12) -- node[midway,right,color=black] {across-variable} 
+            node[midway,right,color=black,anchor=north west,font=\footnotesize] {drop} (n22);
+        \node[graphnode] (n3) at (5,2) {};
+        \node[graphnode] (n4) at (5,0) {};
+        \draw[branch] (n3) to [bend left] (n4);
+        \draw[->,>=stealth',thick,color=mygreen,line cap=round,bend angle=22] (0,1.5) to[bend left] (0,.5);
+        \node[left=-3pt] at (5,1) {$i$};
+        \draw[thick,color=mygreen,line cap=round]
+            ($(n3)+(.2,0)$) -- ++ (.6,0)
+            coordinate (n12) -- ++(.15,0);
+        \draw[thick,color=mygreen,line cap=round]
+            ($(n4)+(.2,0)$) -- ++ (.6,0)
+            coordinate (n22) -- ++(.15,0);
+        \draw[->,thick,color=mygreen,line cap=round,>=stealth']
+            (n12) -- node[midway,right,color=black] {$v$} 
+            node[midway,right,color=black,anchor=north west,font=\footnotesize] {drop} (n22);
+    \end{tikzpicture}
+    \end{center}
+    \note[itemize]{
+        \item In each energy domain, each of the pair of power flow variables has a unique type.
+        \item One is called a through-variable. This variable passes through the element and is the same on both ends.
+        \item We see this variable on the left of each diagram. In an electronic system, we see that this is the current $i$, which flows through the element and can be measured on either end.
+        \item The other power flow variable is called an across-variable. This variable is defined as a relative quantity across the element and must be measured across the ends of the element. 
+        \item The across-variable can be considered to ``drop'' across the element.
+        \item We see this variable on the right of each diagram. In an electronic system, we see that this is the voltage $v$, which drops across the element and must be measured at both ends ends.
+    }
 \end{frame}
 
-\begin{frame}{Frequency response function models}
+\begin{frame}{Electronic power flow variables}
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{i(t)}_{\text{through}} \underbrace{v(t)}_{\text{across}}.
+    \end{equation}
+    \begin{center}
+    \begin{circuitikz}[]
+        \draw
+          (0,0) to[R=$R$,i=$i_R$,v=$v_R$] (2,0);
+        \draw
+          (3,0) to[L=$L$,i=$i_L$,v=$v_L$] (5,0);
+        \draw
+          (6,0) to[C=$C$,i=$i_C$,v=$v_C$] (8,0);
+    \end{circuitikz}
+    \end{center}
+    \note[itemize]{
+        \item As we have already seen, for an electronic system, the power flow variables are current $i$ and voltage $v$. 
+        \item The current is the through-variable and the voltage is the across-variable.
+        \item Shown are three common electronic elements: a resistor $R$, an inductor $L$, and a capacitor $C$.
+        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    }
+\end{frame}
 
+\begin{frame}{Mechanical translational power flow variables}
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{f(t)}_{\text{through}} \underbrace{v(t)}_{\text{across}}.
+    \end{equation}
+\begin{tikzpicture}
+        \draw[damper] (0,0) -- node[above=7] {$B$} (2,0);
+        \draw[->,mygreen] (0,0) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_1$};
+        \draw[->,mygreen] (2,0) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_2$};
+        \draw[->,violet] (0,0) -- ++(-.5,0)
+        node[left] {$f$};
+        \draw[->,violet] (2,0) -- ++(.5,0)
+        node[right] {$f$};
+        \draw[fill=white] (0,0) circle (2pt);
+        \draw[fill=white] (2,0) circle (2pt);
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}
+        \draw[spring] (0,0) -- node[above=5] {$k$} (2,0);
+        \draw[->,mygreen] (0,0) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_1$};
+        \draw[->,mygreen] (2,0) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_2$};
+        \draw[->,violet] (0,0) -- ++(-.5,0)
+        node[left] {$f$};
+        \draw[->,violet] (2,0) -- ++(.5,0)
+        node[right] {$f$};
+        \draw[fill=white] (0,0) circle (2pt);
+        \draw[fill=white] (2,0) circle (2pt);
+    \end{tikzpicture}
+    \hfill
+    \begin{tikzpicture}
+        \node[rectangle,draw,thick,rounded corners=.5pt,minimum width=1cm,minimum height=1cm] (m) at (0,0) {$m$};
+        \node[groundmech,minimum height=1cm] (g) at (-1.5,0) {};
+        \draw (g.south east) -- (g.north east);
+        \draw[->,mygreen] (g.north east) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_2$};
+        \draw[->,mygreen] (m.north east) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$v_1$};
+        \draw[->,violet] (m.east) -- ++(.5,0)
+        node[right] {$f$};
+        % \draw[fill=white] (0,0) circle (2pt);
+        % \draw[fill=white] (2,0) circle (2pt);
+    \end{tikzpicture}
+    \hfill
+    \note[itemize]{
+        \item Analogous to the electronic system, for a mechanical translational system, the power flow variables are force $f$ and velocity $v$. 
+        \item The force is the through-variable and the velocity is the across-variable.
+        \item An easy way to remember this is by cutting the element and summing the forces in equilibrium: the force transmits continuously from one end to the other and is therefore the through-variable.
+        \item Shown are three common mechanical elements: a damper $B$, a spring $k$, and a mass $m$.
+        \item The through- and across-variables of each are shown with subscripts associated with the element.
+        \item Notice that the mass $m$'s velocity must have a reference despite it being physically disconnected from it.
+    }
+\end{frame}
+
+\begin{frame}{Mechanical rotational power flow variables}
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{T(t)}_{\text{through}} \underbrace{\Omega(t)}_{\text{across}}.
+    \end{equation}
+    \begin{tabularx}{1\linewidth}{XXX}
+        \begin{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]
+            \draw[dragcup] (0,0) -- node[above=10] {$B$} (2,0);
+            \node (w1) at (0,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w1.north) {$\Omega_1$};
+            \draw[->,thick,color=violet] ($(w1.west)-(.5,0)$) coordinate (lefty) -- (w1.west);
+            \node[left=.07] at (lefty) {$T$};
+            \node (w2) at (2,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w2.north) {$\Omega_2$};
+            \draw[->,thick,color=violet] ($(w2.east)+(.5,0)$) coordinate (righty) -- (w2.east);
+            \node[right=.07] at (righty) {$T$};
+        \end{tikzpicture} \\ \vspace{1\baselineskip}
+    &
+        \begin{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]
+            \draw[spring] (0,0) -- node[above=10] {$k$} (2,0);
+            \node (w1) at (0,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w1.north) {$\Omega_1$};
+            \draw[->,thick,color=violet] ($(w1.west)-(.5,0)$) coordinate (lefty) -- (w1.west);
+            \node[left=.07] at (lefty) {$T$};
+            \node (w2) at (2,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w2.north) {$\Omega_2$};
+            \draw[->,thick,color=violet] ($(w2.east)+(.5,0)$) coordinate (righty) -- (w2.east);
+            \node[right=.07] at (righty) {$T$};
+        \end{tikzpicture}
+    &
+        \begin{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]
+            \node[rectangle,draw,minimum width=1cm,minimum height=1.5cm] (J1) at (1,0) {$J$};
+            \node (w1) at (0,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w1.north) {$\Omega_2$};
+            \node[left=.07] at (w1.west) {ref};
+            \node[anchor=west] (w2) at (J1.east) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w2.north) {$\Omega_1$};
+            \draw[->,thick,color=violet] ($(w2.east)+(.5,0)$) coordinate (righty) -- (w2.east);
+            \node[right=.07] at (righty) {$T$};
+        \end{tikzpicture}
+    \\
+        \begin{tikzpicture}[every node/.style={inner sep=0,outer sep=0}]
+            \draw[bearing] (0,0) -- node[above=10] {$B$} (2,0);
+            \node (w1) at (0,0) {\AxisRotator[->,rotate=0,mygreen]};
+            \node[above] at (w1.north) {$\Omega$};
+            \draw[->,thick,color=violet] ($(w1.west)-(.5,0)$) coordinate (lefty) -- (w1.west);
+            \node[left=.07] at (lefty) {$T$};
+            \node (w2) at (2,0) {\AxisRotator[->,rotate=0,white]};
+            % \node[above] at (w2.north) {$\Omega_2$};
+            \draw[->,thick,color=violet] ($(w2.east)+(.5,0)$) coordinate (righty) -- (w2.east);
+            \node[right=.07] at (righty) {$T$};
+        \end{tikzpicture} & &
+    \end{tabularx}
+    \note[itemize]{
+        \item Analogous to the electronic system, for a mechanical rotational system, the power flow variables are torque $T$ and angular velocity $\Omega$. 
+        \item The torque is the through-variable and the angular velocity is the across-variable.
+        \item Shown are three common mechanical rotational elements: a rotational damper $B$, a rotational spring $k$, and a (mass) moment of inertia $J$.
+        \item The through- and across-variables of each are shown with subscripts associated with the element.
+        \item Notice that the inertial element $J$'s angular velocity must have a reference despite it being physically disconnected from it.
+    }
+\end{frame}
+
+\begin{frame}{Fluid power flow variables}
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{Q(t)}_{\text{through}} \underbrace{P(t)}_{\text{across}}.
+    \end{equation}
+    \begin{tabularx}{1\linewidth}{XXX}
+        \includegraphics[width=.8\linewidth]{figures/fluid-resistor-R1.pdf}
+        &
+        \includegraphics[width=.8\linewidth]{figures/fluid-inertance-I.pdf}
+        &
+        \includegraphics[width=.8\linewidth]{figures/fluid-capacitance-C.pdf}
+        \\
+        \includegraphics[width=.8\linewidth]{figures/fluid-resistor-R2.pdf} & & 
+    \end{tabularx}
+    \note[itemize]{
+        \item Analogous to the electronic system, for a fluid system, the power flow variables are volumetric flowrate $Q$ and pressure $P$. 
+        \item The flowrate is the through-variable and the pressure is the across-variable.
+        \item Shown are three common fluid elements: a fluid resistor $R$, an inertance $I$, and a fluid capacitance $C$.
+        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    }
+\end{frame}
+
+\begin{frame}{Thermal power flow variables}
+    \begin{equation}
+        \underbrace{\mathcal{P}(t)}_{\text{power}} = \underbrace{q(t)}_{\text{through}}.
+    \end{equation}
+    Also, 
+    \begin{equation}
+        \underbrace{P(t)}_{\text{across}}.
+    \end{equation}
+    \hfill\hfill
+    \begin{circuitikz}[]
+        \draw
+          (0,0) to[R=$R$,i=$q_R$,v=$T_R$] (2,0);
+    \end{circuitikz}
+    \hfill
+    \begin{tikzpicture}
+        \node[rectangle,draw,thick,rounded corners=.5pt,minimum width=1cm,minimum height=1cm] (m) at (0,0) {$C$};
+        \node[groundmech,minimum height=1cm] (g) at (-1.5,0) {};
+        \draw (g.south east) -- (g.north east);
+        \draw[->,mygreen] (g.north east) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$T_1$};
+        \draw[->,mygreen] (m.north east) -- ++(0,.75)
+        -- ++(.3,0)
+        node[above] {$T_2$};
+        \draw[->,violet] (m.east) -- ++(.5,0)
+        node[right] {$q_C$};
+        % \draw[fill=white] (0,0) circle (2pt);
+        % \draw[fill=white] (2,0) circle (2pt);
+    \end{tikzpicture}
+    \hfill\hfill
+    \note[itemize]{
+        \item Surprisingly, thermal systems are a bit different.
+        \item Due to the conventional choice of temperature $T$ and heat flowrate $q$ as variables, the power is just the heat flowrate $q$!
+        \item However, we do define the across-variable temperature.
+        \item The heat flowrate is the through-variable.
+        \item Shown are the two common thermal elements: a thermal resistor $R$ and a thermal capacitance $C$.
+        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    }
+\end{frame}
+
+\begin{frame}
+\begingroup
+\renewcommand*{\arraystretch}{1.85}
+\begin{adjustbox}{center}
+\tiny
+\begin{tabular}{@{}llcccccc@{}}
+\toprule
+ & & \textbf{generalized} & \begingroup\renewcommand*{\arraystretch}{1}\begin{tabular}[c]{@{}c@{}}\textbf{mechanical}\\ \textbf{translation}\end{tabular}\endgroup & \begingroup\renewcommand*{\arraystretch}{1}\begin{tabular}[c]{@{}c@{}}\textbf{mechanical}\\ \textbf{rotation}\end{tabular}\endgroup & \textbf{electrical} & \textbf{fluid} & \textbf{thermal} \\ 
+\cmidrule[\lightrulewidth](lr{1ex}){3-8}%\cmidrule[\lightrulewidth]{3-7}
+\multirow{2}{*}{\textbf{variables}} & \emph{across} & $\mathcal{V}$ & velocity $v$ & angular vel.\ $\Omega$ & voltage $v$ & pressure $P$ & temp.\ $T$ \\
+% \cmidrule[.5\lightrulewidth](lr{1ex}){2-7}
+ & \emph{through} & $\mathcal{F}$ & force $f$ & torque $T$ & current $i$ & vol.\ fr.\ $Q$ & heat fr.\ $q$ \\
+\cmidrule[\lightrulewidth](lr{1ex}){3-8}
+\multirow{4}{*}{\textbf{A-type}} & \emph{capacitor} & capacitor & mass & mom.\ inertia & capacitor & capacitor & capacitor \\
+% \cmidrule[.5\lightrulewidth](lr{1ex}){2-7}
+& \emph{capacitance} & $C$ & $m$ & $J$ & $C$ & $C$ & $C$ \\
+& \emph{elem.\ eq.} & $\dfrac{d\mathcal{V}_C}{d t} = \dfrac{1}{C} \mathcal{F}_C$ & $\dfrac{d v_m}{d t} = \dfrac{1}{m} f_m$ & $\dfrac{d \Omega_J}{d t} = \dfrac{1}{J} T_J$ & $\dfrac{d v_C}{d t} = \dfrac{1}{C} i_C$ & $\dfrac{d P_C}{d t} = \dfrac{1}{C} Q_C$ & $\dfrac{d T_C}{d t} = \dfrac{1}{C} q_C$ \\
+& \emph{impedance} & $\dfrac{1}{C s}$ & $\dfrac{1}{m s}$ & $\dfrac{1}{J s}$ & $\dfrac{1}{C s}$ & $\dfrac{1}{C s}$ & $\dfrac{1}{C s}$ \\
+\cmidrule[\lightrulewidth](lr{1ex}){3-8}
+\multirow{4}{*}{\textbf{T-type}} & \emph{inductor} & inductor & spring & rot.\ spring& inductor & inertance &  \\
+% \cmidrule[.5\lightrulewidth](lr{1ex}){2-6}
+& \emph{inductance} & $L$ & $1/k$ & $1/k$ & $L$ & $I$ &  \\
+& \emph{elem.\ eq.} & $\dfrac{d\mathcal{F}_L}{d t} = \dfrac{1}{L} \mathcal{V}_L$ & $\dfrac{d f_k}{d t} = k v_k$ & $\dfrac{d T_k}{d t} = k \Omega_k$ & $\dfrac{d i_L}{d t} = \dfrac{1}{L} v_L$ & $\dfrac{d Q_I}{d t} = \dfrac{1}{I} P_I$ & \\
+& \emph{impedance} & $L s$ & $s/k$ & $s/k$ & $L s$ & $I s$ &  \\
+\cmidrule[\lightrulewidth](lr{1ex}){3-8}
+\multirow{4}{*}{\textbf{D-type}} & \emph{resistor} & resistor & damper & rot.\ damper & resistor & resistor & resistor\\
+% \cmidrule[.5\lightrulewidth](lr{1ex}){2-7}
+& \emph{resistance} & $R$ & $1/B$ & $1/B$ & $R$ & $R$ & $R$ \\ 
+& \emph{elem.\ eq.} & $\mathcal{V}_R = \mathcal{F}_R R$ & $v_B = f_B/B$ & $\Omega_B = T_B/B$ & $v_R = i_R R$ & $P_R = Q_R R$ & $T_R = q_R R$ \\
+& \emph{impedance} & $R$ & $1/B$ & $1/B$ & $R$ & $R$ & $R$ \\ 
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\endgroup
 \end{frame}
 
 %----------------------------------------------------------------------------------------
