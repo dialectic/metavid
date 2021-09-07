@@ -8,6 +8,9 @@
 
 \beamertemplatenavigationsymbolsempty
 
+% \usepackage[]{pdfpc}
+
+
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage[usexcolor=false]{svg}
@@ -53,14 +56,14 @@
     \input{figures/simulating_state_space_response_04}
 \end{frame}
 
-    \note[itemize]{
-        \item In dynamic systems and elsewhere, we use mathematical variables to represent physical quantities that change through time.
-        \item Consider, for instance, an electronic system.
-        \item This plot shows two traces through time, one for voltage and the other for current.
-        \item The specific waveforms are determined by a number of things:
-        \item the specific voltage and current being represented,
-        \item the topology of the system,
-        \item the system's initial conditions.
+    \pnote{
+        In dynamic systems and elsewhere, we use mathematical variables to represent physical quantities that change through time. \\
+        Consider, for instance, an electronic system. \\
+        This plot shows two traces through time, one for voltage and the other for current. \\
+        The specific waveforms are determined by a number of things: \\
+        the specific voltage and current being represented, \\
+        the topology of the system, \\
+        the system's initial conditions. \\
     }
 
 \begin{frame}{Power flow variables}
@@ -70,11 +73,11 @@
     \end{equation}
 \end{frame}
 
-    \note[itemize]{
-        \item Here is the definition of power in an electronic system: the product of current and voltage.
-        \item Power in all the domains we'll consider have the same form, the product of two variables.
-        \item In each energy domain, a pair of variables will be called the power flow variables, and their product will be the power.
-        \item The choice is not uniquely determined by their product being the power; however, there are common conventions we'll follow.
+    \pnote{
+        Here is the definition of power in an electronic system: the product of current and voltage. \\
+        Power in all the domains we'll consider have the same form, the product of two variables. \\
+        In each energy domain, a pair of variables will be called the power flow variables, and their product will be the power. \\
+        The choice is not uniquely determined by their product being the power; however, there are common conventions we'll follow. \\
     }
 
 \begin{frame}{Through- and across-variables}
@@ -115,13 +118,13 @@
     \end{center}
 \end{frame}
 
-    \note[itemize]{
-        \item In each energy domain, each of the pair of power flow variables has a unique type.
-        \item One is called a through-variable. This variable passes through the element and is the same on both ends.
-        \item We see this variable on the left of each diagram. In an electronic system, we see that this is the current $i$, which flows through the element and can be measured on either end.
-        \item The other power flow variable is called an across-variable. This variable is defined as a relative quantity across the element and must be measured across the ends of the element. 
-        \item The across-variable can be considered to ``drop'' across the element.
-        \item We see this variable on the right of each diagram. In an electronic system, we see that this is the voltage $v$, which drops across the element and must be measured at both ends ends.
+    \pnote{
+        In each energy domain, each of the pair of power flow variables has a unique type. \\
+        One is called a through-variable. This variable passes through the element and is the same on both ends. \\
+        We see this variable on the left of each diagram. In an electronic system, we see that this is the current $i$, which flows through the element and can be measured on either end. \\
+        The other power flow variable is called an across-variable. This variable is defined as a relative quantity across the element and must be measured across the ends of the element.  \\
+        The across-variable can be considered to ``drop'' across the element. \\
+        We see this variable on the right of each diagram. In an electronic system, we see that this is the voltage $v$, which drops across the element and must be measured at both ends ends. \\
     }
 
 \begin{frame}{Electronic power flow variables}
@@ -140,11 +143,11 @@
     \end{center}
 \end{frame}
 
-    \note[itemize]{
-        \item As we have already seen, for an electronic system, the power flow variables are current $i$ and voltage $v$. 
-        \item The current is the through-variable and the voltage is the across-variable.
-        \item Shown are three common electronic elements: a resistor $R$, an inductor $L$, and a capacitor $C$.
-        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    \pnote{
+        As we have already seen, for an electronic system, the power flow variables are current $i$ and voltage $v$.  \\
+        The current is the through-variable and the voltage is the across-variable. \\
+        Shown are three common electronic elements: a resistor $R$, an inductor $L$, and a capacitor $C$. \\
+        The through- and across-variables of each are shown with subscripts associated with the element. \\
     }
 
 \begin{frame}{Mechanical translational power flow variables}
@@ -201,13 +204,13 @@
     \hfill
 \end{frame}
 
-    \note[itemize]{
-        \item Analogous to the electronic system, for a mechanical translational system, the power flow variables are force $f$ and velocity $v$. 
-        \item The force is the through-variable and the velocity is the across-variable.
-        \item An easy way to remember this is by cutting the element and summing the forces in equilibrium: the force transmits continuously from one end to the other and is therefore the through-variable.
-        \item Shown are three common mechanical elements: a damper $B$, a spring $k$, and a mass $m$.
-        \item The through- and across-variables of each are shown with subscripts associated with the element.
-        \item Notice that the mass $m$'s velocity must have a reference despite it being physically disconnected from it.
+    \pnote{
+        Analogous to the electronic system, for a mechanical translational system, the power flow variables are force $f$ and velocity $v$.  \\
+        The force is the through-variable and the velocity is the across-variable. \\
+        An easy way to remember this is by cutting the element and summing the forces in equilibrium: the force transmits continuously from one end to the other and is therefore the through-variable. \\
+        Shown are three common mechanical elements: a damper $B$, a spring $k$, and a mass $m$. \\
+        The through- and across-variables of each are shown with subscripts associated with the element. \\
+        Notice that the mass $m$'s velocity must have a reference despite it being physically disconnected from it. \\
     }
 
 \begin{frame}{Mechanical rotational power flow variables}
@@ -264,12 +267,12 @@
     \end{tabularx}
 \end{frame}
 
-    \note[itemize]{
-        \item Analogous to the electronic system, for a mechanical rotational system, the power flow variables are torque $T$ and angular velocity $\Omega$. 
-        \item The torque is the through-variable and the angular velocity is the across-variable.
-        \item Shown are three common mechanical rotational elements: a rotational damper $B$, a rotational spring $k$, and a (mass) moment of inertia $J$.
-        \item The through- and across-variables of each are shown with subscripts associated with the element.
-        \item Notice that the inertial element $J$'s angular velocity must have a reference despite it being physically disconnected from it.
+    \pnote{
+        Analogous to the electronic system, for a mechanical rotational system, the power flow variables are torque $T$ and angular velocity $\Omega$.  \\
+        The torque is the through-variable and the angular velocity is the across-variable. \\
+        Shown are three common mechanical rotational elements: a rotational damper $B$, a rotational spring $k$, and a (mass) moment of inertia $J$. \\
+        The through- and across-variables of each are shown with subscripts associated with the element. \\
+        Notice that the inertial element $J$'s angular velocity must have a reference despite it being physically disconnected from it. \\
     }
 
 \begin{frame}{Fluid power flow variables}
@@ -287,11 +290,11 @@
     \end{tabularx}
 \end{frame}
 
-    \note[itemize]{
-        \item Analogous to the electronic system, for a fluid system, the power flow variables are volumetric flowrate $Q$ and pressure $P$. 
-        \item The flowrate is the through-variable and the pressure is the across-variable.
-        \item Shown are three common fluid elements: a fluid resistor $R$, an inertance $I$, and a fluid capacitance $C$.
-        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    \pnote{
+        Analogous to the electronic system, for a fluid system, the power flow variables are volumetric flowrate $Q$ and pressure $P$.  \\
+        The flowrate is the through-variable and the pressure is the across-variable. \\
+        Shown are three common fluid elements: a fluid resistor $R$, an inertance $I$, and a fluid capacitance $C$. \\
+        The through- and across-variables of each are shown with subscripts associated with the element. \\
     }
 
 \begin{frame}{Thermal power flow variables}
@@ -326,13 +329,13 @@
     \hfill\hfill
 \end{frame}
 
-    \note[itemize]{
-        \item Surprisingly, thermal systems are a bit different.
-        \item Due to the conventional choice of temperature $T$ and heat flowrate $q$ as variables, the power is just the heat flowrate $q$!
-        \item However, we do define the across-variable temperature.
-        \item The heat flowrate is the through-variable.
-        \item Shown are the two common thermal elements: a thermal resistor $R$ and a thermal capacitance $C$.
-        \item The through- and across-variables of each are shown with subscripts associated with the element.
+    \pnote{
+        Surprisingly, thermal systems are a bit different. \\
+        Due to the conventional choice of temperature $T$ and heat flowrate $q$ as variables, the power is just the heat flowrate $q$! \\
+        However, we do define the across-variable temperature. \\
+        The heat flowrate is the through-variable. \\
+        Shown are the two common thermal elements: a thermal resistor $R$ and a thermal capacitance $C$. \\
+        The through- and across-variables of each are shown with subscripts associated with the element. \\
     }
 
 \begin{frame}

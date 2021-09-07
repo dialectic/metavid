@@ -659,6 +659,8 @@ INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/translator/translator-numbers
 INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/translator/translator-numbers-dictionary-English.dict
 INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
 INPUT /usr/local/texlive/2021/texmf-dist/tex/latex/translator/translator-theorem-dictionary-English.dict
+OUTPUT slideshow.pdfpc
+OUTPUT slideshow.txt
 INPUT ./slideshow.nav
 INPUT ./slideshow.nav
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmsans8-regular.luc

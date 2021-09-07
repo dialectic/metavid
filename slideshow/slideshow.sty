@@ -1,5 +1,40 @@
 \ProvidesPackage{slideshow}
 
+% create a new file handle
+\newwrite\pdfpcnotesfile
+\newwrite\notesfile
+
+% open file on \begin{document}
+\AtBeginDocument{%
+    \immediate\openout\pdfpcnotesfile\jobname.pdfpc\relax
+    \immediate\write\pdfpcnotesfile{[notes]}
+    \immediate\openout\notesfile\jobname.txt\relax
+}
+% define a # https://tex.stackexchange.com/a/37757/10327
+\begingroup
+    \catcode`\#=12
+    \gdef\hashchar{#}%
+\endgroup
+% define command \pnote{} that works exactly like \note but
+% additionally writes notes to file in pdfpc readable format
+\newcommand{\pnote}[1]{%
+    % keep normal notes working
+    \note{#1}%
+    % write notes to file
+    \begingroup
+        \let\#\hashchar
+        \immediate\write\pdfpcnotesfile{\#\#\# \theframenumber}%
+        \immediate\write\pdfpcnotesfile{\unexpanded{#1}}%
+        \immediate\write\notesfile{\theframenumber}%
+        \immediate\write\notesfile{\unexpanded{#1}}%
+    \endgroup
+}
+% close file on \end{document}
+\AtEndDocument{%
+    \immediate\closeout\pdfpcnotesfile
+    \immediate\closeout\notesfile
+}
+
 \usepackage{tabularx}
 \renewcommand\tabularxcolumn[1]{m{#1}}   
 \usepackage{adjustbox}
