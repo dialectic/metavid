@@ -692,6 +692,7 @@ INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/ot
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman5-regular.luc
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman7-italic.luc
+INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmsans9-regular.luc
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
@@ -713,7 +714,6 @@ INPUT /usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman8-regular.luc
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman6-regular.luc
 INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman8-italic.luc
-INPUT /Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmsans9-regular.luc
 INPUT ./figures/fluid-resistor-R1.pdf
 INPUT ./figures/fluid-resistor-R1.pdf
 INPUT ./figures/fluid-resistor-R1.pdf

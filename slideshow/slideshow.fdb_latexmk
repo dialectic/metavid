@@ -1,5 +1,5 @@
 # Fdb version 3
-["lualatex"] 1630983547 "slideshow.tex" "slideshow.pdf" "slideshow" 1630983553
+["lualatex"] 1630983986 "slideshow.tex" "slideshow.pdf" "slideshow" 1630983999
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-italic.luc" 1630975424 132153 32ac2cf6362527715db851225380f658 ""
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-regular.luc" 1625441481 123160 8e770f8f9380aad0d011b390c9f816af ""
   "/Users/picone/Library/texlive/2021/texmf-var/luatex-cache/generic/fonts/otl/lmroman5-regular.luc" 1630975423 121792 1eb17a1c0c0f3bb8b0206dc3279eed15 ""
@@ -390,16 +390,16 @@
   "figures/fluid-resistor-R1.pdf" 1630981394 58283 fb1252d93e01b4d0ba4986b0c6f5682b ""
   "figures/fluid-resistor-R2.pdf" 1630981428 58989 4b67455e619197351743933620a6090f ""
   "figures/simulating_state_space_response_04.tex" 1630967380 5399 8050b27197c306423e420aac41812230 ""
-  "slideshow.aux" 1630983552 2372 63736a026cde44aba3955582e5c624e8 "lualatex"
-  "slideshow.nav" 1630983552 1109 07396102f9d82bf25877ba7d82798efb "lualatex"
-  "slideshow.out" 1630983550 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
+  "slideshow.aux" 1630983991 2388 33ea089c32176a84876ea8eb8b8867aa "lualatex"
+  "slideshow.nav" 1630983991 1125 aa5dfc40f40c4ae0b0e38ef9c6b5bfe9 "lualatex"
+  "slideshow.out" 1630983989 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
   "slideshow.sty" 1630983449 12753 9d3acbadbaef9aa68471eeb161f2f749 ""
-  "slideshow.tex" 1630983545 18531 faef2e9e2e7d561b39a46f32ce558698 ""
+  "slideshow.tex" 1630983977 18744 10faa20edc655269fb7b6b5a3b8e1ba7 ""
   (generated)
   "slideshow.nav"
-  "slideshow.pdf"
   "slideshow.log"
-  "slideshow.out"
-  "slideshow.snm"
   "slideshow.aux"
+  "slideshow.snm"
+  "slideshow.pdf"
   "slideshow.toc"
+  "slideshow.out"
