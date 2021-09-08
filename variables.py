@@ -2,7 +2,7 @@ import ffmpeg
 import pathlib as pl
 import matplotlib.pyplot as plt
 import numpy as np
-from metastimuli_video import *
+from metavid import metavid
 import pickle
 
 # extract scene transitions
@@ -10,27 +10,16 @@ import pickle
 mv = metavid('variables.mp4')
 mv.get_scene_transitions() # this saves into mv.timestamps
 
-# import projected atom arrays
+# import projected atoms arrays
 
-atoms = pickle.load(open( "chi_pred.pkl", "rb" )).transpose()
-n_atoms = np.shape(atoms)[1]
+mv.load_atoms('chi_pred.pkl')
 
-# make plots
+# make plots and overlay
 
-for i in range(0,n_atoms):
-	plt.scatter(atoms[0,:],atoms[1,:], c="g", marker='o')
-	plt.scatter(atoms[0,i],atoms[1,i], c="r", marker='o')
-	plt.savefig(f'lucky_{i}.png', transparent=True)
+mv.overlay_all_plots(
+	starting_scene_i=1 # so first (i=0) scene doesn't get a plot
+)
 
-# overlay on video
+# run video processing and export video
 
-# mv = metavid('variables.mp4')
-for i in range(0,n_atoms):
-	mv.overlay_plot_i(
-		f'lucky_{i}.png', # image file
-		i # atom index
-	)
-# mv.export()
-
-# mv = metavid('variables.mp4')
-# mv.timestamps_extract('variables_transitions.txt')
+mv.export()
