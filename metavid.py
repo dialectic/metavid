@@ -63,16 +63,29 @@ class metavid:
 		)
 		self.plot_filenames = [] # re-initialize
 		for i in range(0,self.n_atoms):
-			plt.scatter(
+			frame1 = plt.gca()
+			plt.plot(
 				self.atoms[0,:],
 				self.atoms[1,:], 
-				c="g", marker='o'
+				c="tab:olive", marker='o'
 			)
-			plt.scatter(
+			plt.plot(
+				self.atoms[0,0:i+1],
+				self.atoms[1,0:i+1], 
+				c="tab:gray", marker='o'
+			)
+			plt.plot(
 				self.atoms[0,i],
 				self.atoms[1,i], 
-				c="r", marker='o'
+				c="white", marker='o', markersize=10
 			)
+			plt.plot(
+				self.atoms[0,i],
+				self.atoms[1,i], 
+				c="tab:blue", marker='o', markersize=6
+			)
+			frame1.axes.xaxis.set_visible(False)
+			frame1.axes.yaxis.set_visible(False)
 			self.plot_filenames.append( # store filenames
 				pl.Path(f'{filename_base}_{i}.png')
 			)
