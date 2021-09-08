@@ -53,9 +53,14 @@ class metavid:
 		self.n_scenes = 1+len(self.timestamps)
 		return self
 
-	def plot(self,filename_base='plot'):
+	def plot(self,filename_base='plots/plot'):
 		if not len(self.atoms) > 0:
 			raise Exception('load atoms first with load_atoms method')
+		(pl # make dir if not exist
+			.Path(filename_base)
+			.parents[0]
+			.mkdir(parents=True, exist_ok=True)
+		)
 		self.plot_filenames = [] # re-initialize
 		for i in range(0,self.n_atoms):
 			plt.scatter(
@@ -100,10 +105,8 @@ class metavid:
 			starting_scene_i,
 			self.n_atoms+starting_scene_i
 		)
-		print(scene_atom_i)
 		for i in range(0,self.n_atoms):
 			i_scene = scene_atom_i[i]
-			print(i_scene)
 			self.overlay_plot_i(
 				self.plot_filenames[i], # image filename
 				i_scene # atom index
