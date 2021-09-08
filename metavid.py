@@ -5,12 +5,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import platform
 import re
+import pickle
 
 class metavid:
 	def __init__(self, filename):
 		self.filename = pl.Path(filename)
 		self.stream = ffmpeg.input(os.fspath(self.filename))
 		self.timestamps = [] # populate with get_scene_transitions
+		self.plot_filenames = []
 
 	def run(self, stream, filename='_dummy.mp4'):
 		system = platform.system()
@@ -32,8 +34,12 @@ class metavid:
 		self.run(self.stream, filename)
 		return self
 
-	def hflip(self):
-		self.stream = ffmpeg.hflip(self.stream)
+	def load_atoms(self,filename):
+		# loads atoms array from filename pickle file of shape:
+		# (n_atoms,2)
+		filename = pl.Path(filename)
+		self.atoms = pickle.load(open( filename, "rb" )).transpose()
+		self.n_atoms = np.shape(self.atoms)[1]
 		return self
 
 	def get_scene_transitions(self,force=False):
@@ -44,6 +50,31 @@ class metavid:
 			stream = ffmpeg.filter(stream,'metadata','print',file=transitions_file)
 			self.run(stream)
 		self.timestamps_extract(transitions_file)
+		self.n_scenes = 1+len(self.timestamps)
+		return self
+
+	def plot(self,filename_base='plot'):
+		if not len(self.atoms) > 0:
+			raise Exception('load atoms first with load_atoms method')
+		self.plot_filenames = [] # re-initialize
+		for i in range(0,self.n_atoms):
+			plt.scatter(
+				self.atoms[0,:],
+				self.atoms[1,:], 
+				c="g", marker='o'
+			)
+			plt.scatter(
+				self.atoms[0,i],
+				self.atoms[1,i], 
+				c="r", marker='o'
+			)
+			self.plot_filenames.append( # store filenames
+				pl.Path(f'{filename_base}_{i}.png')
+			)
+			plt.savefig( # save transparent png
+				self.plot_filenames[i], 
+				transparent=True
+			)
 		return self
 
 	def overlay_plot(self,image,time_range=[0,10]):
@@ -61,6 +92,24 @@ class metavid:
 		time_range = self.time_range_i(atom_index)
 		self.overlay_plot(image,time_range)
 
+	def overlay_all_plots(self,starting_scene_i=0):
+		# overlays all atom plots on scenes starting with index starting_scene_i
+		if not len(self.plot_filenames) > 0:
+			self.plot()
+		scene_atom_i = range( # scene index for atom
+			starting_scene_i,
+			self.n_atoms+starting_scene_i
+		)
+		print(scene_atom_i)
+		for i in range(0,self.n_atoms):
+			i_scene = scene_atom_i[i]
+			print(i_scene)
+			self.overlay_plot_i(
+				self.plot_filenames[i], # image filename
+				i_scene # atom index
+			)
+		return self
+
 	def time_range_i(self,atom_index):
 		if not self.timestamps:
 			raise Exception('no timestamps yet: run get_scene_transitions first')
@@ -74,9 +123,6 @@ class metavid:
 			else:
 				high = self.timestamps[-1]
 			return [low,high]
-
-	def overlay_all_plots(self,image_dict):
-		return self
 
 	def timestamps_extract(self,tfile):
 		# extracts timestamps from tfile from metadata filter in get_scene_transitions method
