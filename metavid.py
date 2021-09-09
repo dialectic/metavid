@@ -111,15 +111,21 @@ class metavid:
 					self.atoms[1,0:i+1], 
 					c="tab:gray", marker='o'
 					)
+			plt.plot(
+				self.atoms[0,0:i+1],
+				self.atoms[1,0:i+1], 
+				c="white", marker='o', markersize=10, linestyle = 'none'
+				)
+			plt.plot(
+				self.atoms[0,i],
+				self.atoms[1,i], 
+				c="tab:blue", marker='o', markersize=6
+				)
+			if i>0:
 				plt.plot(
-					self.atoms[0,i],
-					self.atoms[1,i], 
-					c="white", marker='o', markersize=10
-					)
-				plt.plot(
-					self.atoms[0,i],
-					self.atoms[1,i], 
-					c="tab:blue", marker='o', markersize=6
+					self.atoms[0,0:i],
+					self.atoms[1,0:i], 
+					c="tab:gray", marker='o', markersize=6, linestyle = 'none'
 					)
 					
 			frame1.axes.xaxis.set_visible(False)
