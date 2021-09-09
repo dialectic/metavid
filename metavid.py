@@ -124,6 +124,7 @@ class metavid:
 				self.plot_filenames[i], 
 				transparent=True
 			)
+			frame1.clear()
 		return self
 
 	def overlay_plot(self,image,time_range=[0,10]):
