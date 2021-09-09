@@ -85,7 +85,7 @@ class metavid:
 				plt.plot(
 					olvSplineCoord[0,:],
 					olvSplineCoord[1,:], 
-					c="tab:olive", linewidth = 4
+					c="darkslateblue", linewidth = 4
 					)
 	            
 	            # Gray Spline
@@ -109,11 +109,11 @@ class metavid:
 				plt.plot(
 					self.atoms[0,0:i+1],
 					self.atoms[1,0:i+1], 
-					c="tab:gray", marker='o'
+					c="silver", marker='o'
 					)
 			plt.plot(
-				self.atoms[0,0:i+1],
-				self.atoms[1,0:i+1], 
+				self.atoms[0,i],
+				self.atoms[1,i], 
 				c="white", marker='o', markersize=10, linestyle = 'none'
 				)
 			plt.plot(
@@ -125,7 +125,7 @@ class metavid:
 				plt.plot(
 					self.atoms[0,0:i],
 					self.atoms[1,0:i], 
-					c="tab:gray", marker='o', markersize=6, linestyle = 'none'
+					c="olive", marker='o', markersize=6, linestyle = 'none'
 					)
 					
 			frame1.axes.xaxis.set_visible(False)
