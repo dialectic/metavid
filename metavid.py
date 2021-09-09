@@ -85,7 +85,7 @@ class metavid:
 				plt.plot(
 					olvSplineCoord[0,:],
 					olvSplineCoord[1,:], 
-					c="tab:olive"
+					c="tab:olive", linewidth = 4
 					)
 	            
 	            # Gray Spline
@@ -98,7 +98,7 @@ class metavid:
 				plt.plot(
 					grySplineCoord[0,:],
 					grySplineCoord[1,:],
-					c="tab:gray"
+					c="tab:gray", linewidth = 4
 					)
 			else:
 				plt.plot(
