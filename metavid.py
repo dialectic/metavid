@@ -3,6 +3,7 @@ import pathlib as pl
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy
 import platform
 import re
 import pickle
@@ -13,16 +14,19 @@ class metavid:
 	def __init__(self, filename):
 		self.filename = pl.Path(filename)
 		self.stream = ffmpeg.input(os.fspath(self.filename))
+		self.vstream = self.stream.video
+		self.astream = self.stream.audio
 		self.timestamps = [] # populate with get_scene_transitions
 		self.plot_filenames = []
 
-	def run(self, stream, filename='_dummy.mp4'):
+	def run(self, *streams, filename='_dummy.mp4'):
+		print(streams)
 		system = platform.system()
 		if system == 'Darwin':
 			print('using macOS hardware acceleration')
-			stream = ffmpeg.output(stream,filename=filename,vcodec='h264_videotoolbox')
+			stream = ffmpeg.output(*streams,filename=filename,vcodec='h264_videotoolbox')
 		else:
-			stream = ffmpeg.output(stream,filename=filename)
+			stream = ffmpeg.output(*streams,filename=filename)
 		ffmpeg.run(stream)
 		return self
 
@@ -33,7 +37,7 @@ class metavid:
 		else:
 			filename = pl.Path(filename)
 		filename = os.fspath(filename)
-		self.run(self.stream, filename)
+		self.run(self.astream, self.vstream, filename=filename)
 		return self
 
 	def load_atoms(self,filename):
@@ -48,9 +52,9 @@ class metavid:
 		# saves metadata timestamps of transitions
 		transitions_file = self.filename.stem+'_transitions.txt'
 		if not pl.Path(transitions_file).is_file() or force:
-			stream = ffmpeg.filter(self.stream,'select','gt(scene,0.04)')
-			stream = ffmpeg.filter(stream,'metadata','print',file=transitions_file)
-			self.run(stream)
+			vstream = ffmpeg.filter(self.vstream,'select','gt(scene,0.04)')
+			vstream = ffmpeg.filter(vstream,'metadata','print',file=transitions_file)
+			self.run(vstream)
 		self.timestamps_extract(transitions_file)
 		self.n_scenes = 1+len(self.timestamps)
 		return self
@@ -128,17 +132,17 @@ class metavid:
 		return self
 
 	def overlay_plot(self,image,time_range=[0,10]):
-		# overlays a single image on self.stream over time_range
+		# overlays a single image on self.vstream over time_range
 		image_stream = ffmpeg.input(os.fspath(image))
-		self.stream = ffmpeg.overlay(
-			self.stream,
+		self.vstream = ffmpeg.overlay(
+			self.vstream,
 			image_stream,
 			enable=f'between(t,{time_range[0]},{time_range[1]})'
 		)
 		return self
 
 	def overlay_plot_i(self,image,atom_index):
-		# overlays a single image on self.stream over time range corresponding to atom_index
+		# overlays a single image on self.vstream over time range corresponding to atom_index
 		time_range = self.time_range_i(atom_index)
 		self.overlay_plot(image,time_range)
 
