@@ -6,6 +6,8 @@ import numpy as np
 import platform
 import re
 import pickle
+from scipy.interpolate import make_interp_spline
+
 
 class metavid:
 	def __init__(self, filename):
@@ -64,16 +66,45 @@ class metavid:
 		self.plot_filenames = [] # re-initialize
 		for i in range(0,self.n_atoms):
 			frame1 = plt.gca()
+			# Olive Spline
+			
+			
+			
+			olvBaseX = self.atoms[0,:]
+			olvBaseY = self.atoms[1,:]
+			
+			olvSize = olvBaseX.size
+			
+			olvBaseT = np.linspace(0, olvSize-1, olvSize)
+			
+			olvSpline = make_interp_spline(olvBaseT,[olvBaseX,olvBaseY], axis=1, k=2)
+			olvSplineT = np.linspace(0, olvSize-1, 500)
+			
+			olvSplineCoord = olvSpline(olvSplineT)
+			
 			plt.plot(
-				self.atoms[0,:],
-				self.atoms[1,:], 
-				c="tab:olive", marker='o'
+				olvSplineCoord[0,:],
+				olvSplineCoord[1,:], 
+				c="tab:olive"
 			)
+            
+            # Gray Spline
+			
+			gryBaseX = self.atoms[0,0:i+1]
+			#gryBaseY = self.atoms[1,0:i+1]
+			
+			grySize = gryBaseX.size
+
+			grySplineT = np.linspace(0, grySize-1, 500)
+			
+			grySplineCoord = olvSpline(grySplineT)
+            
 			plt.plot(
-				self.atoms[0,0:i+1],
-				self.atoms[1,0:i+1], 
-				c="tab:gray", marker='o'
+				grySplineCoord[0,:],
+				grySplineCoord[1,:],
+				c="tab:gray"
 			)
+            
 			plt.plot(
 				self.atoms[0,i],
 				self.atoms[1,i], 
