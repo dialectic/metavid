@@ -67,7 +67,7 @@ class metavid:
 		)
 		self.plot_filenames = [] # re-initialize
 		for i in range(0,self.n_atoms):
-			if fig_type==2 or fig_type==3:
+			if fig_type==2 or fig_type==3:#Is it a spline?
 				frame1 = plt.gca()
 				# Olive Spline
 				# Coordinates
@@ -78,7 +78,7 @@ class metavid:
 				
 				totSpline = make_interp_spline(totBaseT,[totBaseX,totBaseY], axis=1, k=2)
 				
-				if fig_type==2:
+				if fig_type==2: #No history
 					oldBaseX = self.atoms[0,0:i+1]
 					oldSize = oldBaseX.size
 					oldSplineT = np.linspace(0, oldSize-1, 500)
@@ -90,7 +90,7 @@ class metavid:
 						c="tab:gray", linewidth = 4
 					)
 				
-				else:
+				else: #w. History
 					#Spline	
 					totSplineT = np.linspace(0, totSize-1, 500)
 					totSplineCoord = totSpline(totSplineT)
@@ -125,7 +125,7 @@ class metavid:
 						c="tab:blue", marker='o', markersize=16
 						)
 
-			else:
+			else: #Not a spline
 				frame1 = plt.gca()
 				if fig_type == 1:
 					plt.plot(
