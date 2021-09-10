@@ -25,7 +25,7 @@ setup(
     #long_description=long_description,
     packages=find_packages(),
     classifiers=[f for f in CLASSIFIERS.split('\n') if f],
-    install_requires=['ffmpeg',
+    install_requires=['ffmpeg-python',
 					  'numpy',
                       'scipy',
                       'matplotlib',

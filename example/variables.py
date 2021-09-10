@@ -8,7 +8,7 @@ import pickle
 # extract scene transitions
 
 mv = metavid('variables.mp4')
-mv.get_scene_transitions() # this saves into mv.timestamps
+#mv.get_scene_transitions() # this saves into mv.timestamps
 
 # import projected atoms arrays
 
@@ -16,9 +16,11 @@ mv.load_atoms('chi_pred.pkl')
 
 # make plots and overlay
 
-mv.overlay_all_plots(
-	starting_scene_i=1 # so first (i=0) scene doesn't get a plot
-)
+#mv.overlay_all_plots(
+#	starting_scene_i=1# so first (i=0) scene doesn't get a plot
+#)
+
+mv.plot(fig_type=1)
 
 # run video processing and export video
 
