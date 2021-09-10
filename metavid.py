@@ -57,7 +57,7 @@ class metavid:
 		self.n_scenes = 1+len(self.timestamps)
 		return self
 
-	def plot(self,filename_base='plots/plot', fig_type = 3):
+	def plot(self,filename_base='plots/plot', fig_type=3, file_type='png'):
 		if not len(self.atoms) > 0:
 			raise Exception('load atoms first with load_atoms method')
 		(pl # make dir if not exist
@@ -114,7 +114,7 @@ class metavid:
 				frame1.axes.xaxis.set_visible(False)
 				frame1.axes.yaxis.set_visible(False)
 				self.plot_filenames.append( # store filenames
-					pl.Path(f'{filename_base}_{i}.png')
+					pl.Path(f'{filename_base}_{i}.{file_type}')
 				)
 				
 				plt.savefig( # save transparent png
@@ -151,7 +151,7 @@ class metavid:
 			frame1.axes.xaxis.set_visible(False)
 			frame1.axes.yaxis.set_visible(False)
 			plt.savefig( # save transparent png
-				pl.Path(f'{filename_base}.png'), 
+				pl.Path(f'{filename_base}.{file_type}'), 
 				transparent=True
 				)
 			
@@ -175,10 +175,11 @@ class metavid:
 		time_range = self.time_range_i(atom_index)
 		self.overlay_plot(image,time_range)
 
-	def overlay_all_plots(self,starting_scene_i=0):
+	def overlay_all_plots(self,starting_scene_i=0, filename_base = 'plots/plot',
+					   file_type='png'):
 		# overlays all atom plots on scenes starting with index starting_scene_i
 		if not len(self.plot_filenames) > 0:
-			self.plot()
+			self.plot(filename_base=filename_base,file_type=file_type)
 		scene_atom_i = range( # scene index for atom
 			starting_scene_i,
 			self.n_atoms+starting_scene_i
