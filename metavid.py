@@ -116,6 +116,11 @@ class metavid:
 				self.plot_filenames.append( # store filenames
 					pl.Path(f'{filename_base}_{i}.png')
 				)
+				
+				plt.savefig( # save transparent png
+				self.plot_filenames[i], 
+				transparent=True
+				)
 				frame1.clear()
 		else:
 			frame1 = plt.gca()
@@ -145,17 +150,12 @@ class metavid:
 				
 			frame1.axes.xaxis.set_visible(False)
 			frame1.axes.yaxis.set_visible(False)
-			self.plot_filenames.append( # store filenames
-				pl.Path(f'{filename_base}.png')
-				)
-				
-		for i in self.plot_filenames:
 			plt.savefig( # save transparent png
-				i, 
+				pl.Path(f'{filename_base}.png'), 
 				transparent=True
 				)
 			
-					
+			frame1.clear()
 
 		return self
 
