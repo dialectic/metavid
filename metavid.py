@@ -87,8 +87,13 @@ class metavid:
 					plt.plot(
 						oldSplineCoord[0,:],
 						oldSplineCoord[1,:],
-						c="tab:gray", linewidth = 4
+						c="darkslateblue", linewidth = 4
 					)
+					plt.plot(
+						self.atoms[0,0:i+1],
+						self.atoms[1,0:i+1], 
+						c="darkslateblue", marker='o', markersize=16,linestyle = 'none'
+						)
 				
 				else: #w. History
 					#Spline	
@@ -124,6 +129,12 @@ class metavid:
 						self.atoms[1,i], 
 						c="tab:blue", marker='o', markersize=16
 						)
+					if i>0:
+						plt.plot(
+							self.atoms[0,0:i-1],
+							self.atoms[1,0:i-1], 
+							c="silver", marker='o', markersize=16,linestyle = 'none'
+							)
 
 			else: #Not a spline
 				frame1 = plt.gca()
@@ -138,12 +149,7 @@ class metavid:
 					plt.plot(
 						self.atoms[0,i],
 						self.atoms[1,i], 
-						c="white", marker='o', markersize=20, linestyle = 'none'
-						)
-					plt.plot(
-						self.atoms[0,i],
-						self.atoms[1,i], 
-						c="tab:blue", marker='o', markersize=16
+						c="darkslateblue", marker='o', markersize=16
 						)
 			
 			frame1.axes.xaxis.set_visible(False)
