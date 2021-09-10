@@ -66,9 +66,9 @@ class metavid:
 			.mkdir(parents=True, exist_ok=True)
 		)
 		self.plot_filenames = [] # re-initialize
+		frame1 = plt.gca()
 		for i in range(0,self.n_atoms):
 			if fig_type==2 or fig_type==3:#Is it a spline?
-				frame1 = plt.gca()
 				# Olive Spline
 				# Coordinates
 				totBaseX = self.atoms[0,:]
@@ -79,7 +79,7 @@ class metavid:
 				totSpline = make_interp_spline(totBaseT,[totBaseX,totBaseY], axis=1, k=2)
 				
 				if fig_type==2: #No history
-					oldBaseX = self.atoms[0,0:i+1]
+					oldBaseX = self.atoms[0,:]
 					oldSize = oldBaseX.size
 					oldSplineT = np.linspace(0, oldSize-1, 500)
 					# Spline
@@ -123,17 +123,7 @@ class metavid:
 						c="tab:gray", linewidth = 4
 					)
 				
-					#History and Location
-					plt.plot(
-						self.atoms[0,i],
-						self.atoms[1,i], 
-						c="white", marker='o', markersize=20, linestyle = 'none'
-						)
-					plt.plot(
-						self.atoms[0,i],
-						self.atoms[1,i], 
-						c="tab:blue", marker='o', markersize=16
-						)
+					# Don't generate a history marker on the first frame
 					if i>0:
 						plt.plot(
 							self.atoms[0,0:i],
@@ -142,20 +132,32 @@ class metavid:
 							)
 
 			else: #Not a spline
-				frame1 = plt.gca()
 				if fig_type == 1:
 					plt.plot(
-						self.atoms[0,0:i+1],
-						self.atoms[1,0:i+1], 
+						self.atoms[0,:],
+						self.atoms[1,:], 
 						c="darkslateblue",linewidth = 4, markersize=16, marker='o'
 						)
 						
-					#History and Location
 					plt.plot(
 						self.atoms[0,:],
 						self.atoms[1,:], 
 						c="darkslateblue", marker='o', markersize=16, linestyle = 'none'
 						)
+				else:
+					raise("Invalid fig_type specified.")
+			
+			#History and Location
+			plt.plot(
+				self.atoms[0,i],
+				self.atoms[1,i], 
+				c="white", marker='o', markersize=20, linestyle = 'none'
+				)
+			plt.plot(
+				self.atoms[0,i],
+				self.atoms[1,i], 
+				c="tab:blue", marker='o', markersize=16
+				)
 			
 			frame1.axes.xaxis.set_visible(False)
 			frame1.axes.yaxis.set_visible(False)
