@@ -18,10 +18,9 @@ class metavid:
 		self.timestamps = [] # populate with get_scene_transitions
 		self.plot_filenames = []
 
-	def run(self, *streams, filename='_dummy.mp4'):
-		print(streams)
+	def run(self, *streams, filename='_dummy.mp4', hardware_acceleration=False):
 		system = platform.system()
-		if system == 'Darwin':
+		if hardware_acceleration and system == 'Darwin':
 			print('using macOS hardware acceleration')
 			stream = ffmpeg.output(*streams,filename=filename,vcodec='h264_videotoolbox')
 		else:
@@ -145,6 +144,7 @@ class metavid:
 		self.vstream = ffmpeg.overlay(
 			self.vstream,
 			image_stream,
+			x='main_w-overlay_w', y=0,
 			enable=f'between(t,{time_range[0]},{time_range[1]})'
 		)
 		return self
