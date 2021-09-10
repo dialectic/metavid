@@ -66,96 +66,98 @@ class metavid:
 			.mkdir(parents=True, exist_ok=True)
 		)
 		self.plot_filenames = [] # re-initialize
-		if fig_type==3:
-			for i in range(0,self.n_atoms):
+		for i in range(0,self.n_atoms):
+			if fig_type==2 or fig_type==3:
 				frame1 = plt.gca()
 				# Olive Spline
 				# Coordinates
-				olvBaseX = self.atoms[0,:]
-				olvBaseY = self.atoms[1,:]
-				olvSize = olvBaseX.size
-				olvBaseT = np.linspace(0, olvSize-1, olvSize)
+				totBaseX = self.atoms[0,:]
+				totBaseY = self.atoms[1,:]
+				totSize = totBaseX.size
+				totBaseT = np.linspace(0, totSize-1, totSize)
 				
-				#Spline
-				olvSpline = make_interp_spline(olvBaseT,[olvBaseX,olvBaseY], axis=1, k=2)
-				olvSplineT = np.linspace(0, olvSize-1, 500)
-				olvSplineCoord = olvSpline(olvSplineT)
-				plt.plot(
-					olvSplineCoord[0,:],
-					olvSplineCoord[1,:], 
-					c="darkslateblue", linewidth = 4
-					)
-	            
-	            # Gray Spline
-				# Coordinates
-				gryBaseX = self.atoms[0,0:i+1]
-				grySize = gryBaseX.size
-				grySplineT = np.linspace(0, grySize-1, 500)
-				# Spline
-				grySplineCoord = olvSpline(grySplineT)
-				plt.plot(
-					grySplineCoord[0,:],
-					grySplineCoord[1,:],
-					c="tab:gray", linewidth = 4
+				totSpline = make_interp_spline(totBaseT,[totBaseX,totBaseY], axis=1, k=2)
+				
+				if fig_type==2:
+					oldBaseX = self.atoms[0,0:i+1]
+					oldSize = oldBaseX.size
+					oldSplineT = np.linspace(0, oldSize-1, 500)
+					# Spline
+					oldSplineCoord = totSpline(oldSplineT)
+					plt.plot(
+						oldSplineCoord[0,:],
+						oldSplineCoord[1,:],
+						c="tab:gray", linewidth = 4
 					)
 				
-				#History and Location
-				plt.plot(
-					self.atoms[0,i],
-					self.atoms[1,i], 
-					c="white", marker='o', markersize=20, linestyle = 'none'
+				else:
+					#Spline	
+					totSplineT = np.linspace(0, totSize-1, 500)
+					totSplineCoord = totSpline(totSplineT)
+					plt.plot(
+						totSplineCoord[0,:],
+						totSplineCoord[1,:], 
+						c="darkslateblue", linewidth = 4
+						)
+		            
+		            # Gray Spline
+					# Coordinates
+					oldBaseX = self.atoms[0,0:i+1]
+					oldSize = oldBaseX.size
+					oldSplineT = np.linspace(0, oldSize-1, 500)
+					# Spline
+					oldSplineCoord = totSpline(oldSplineT)
+					plt.plot(
+						oldSplineCoord[0,:],
+						oldSplineCoord[1,:],
+						c="tab:gray", linewidth = 4
 					)
-				plt.plot(
-					self.atoms[0,i],
-					self.atoms[1,i], 
-					c="tab:blue", marker='o', markersize=16
-					)
+				
+					#History and Location
+					plt.plot(
+						self.atoms[0,i],
+						self.atoms[1,i], 
+						c="white", marker='o', markersize=20, linestyle = 'none'
+						)
+					plt.plot(
+						self.atoms[0,i],
+						self.atoms[1,i], 
+						c="tab:blue", marker='o', markersize=16
+						)
 
-				frame1.axes.xaxis.set_visible(False)
-				frame1.axes.yaxis.set_visible(False)
-				self.plot_filenames.append( # store filenames
-					pl.Path(f'{filename_base}_{i}.{file_type}')
-				)
-				
-				plt.savefig( # save transparent png
-				self.plot_filenames[i], 
-				transparent=True
-				)
-				frame1.clear()
-		else:
-			frame1 = plt.gca()
-			if fig_type == 1:
-				plt.plot(
-					self.atoms[0,:],
-					self.atoms[1,:], 
-					c="darkslateblue",linewidth = 4, markersize=16, marker='o'
-					)
 			else:
-				# Olive Spline
-				# Coordinates
-				olvBaseX = self.atoms[0,:]
-				olvBaseY = self.atoms[1,:]
-				olvSize = olvBaseX.size
-				olvBaseT = np.linspace(0, olvSize-1, olvSize)
-				
-				#Spline
-				olvSpline = make_interp_spline(olvBaseT,[olvBaseX,olvBaseY], axis=1, k=2)
-				olvSplineT = np.linspace(0, olvSize-1, 500)
-				olvSplineCoord = olvSpline(olvSplineT)
-				plt.plot(
-					olvSplineCoord[0,:],
-					olvSplineCoord[1,:], 
-					c="darkslateblue", linewidth = 4
-					)
-				
+				frame1 = plt.gca()
+				if fig_type == 1:
+					plt.plot(
+						self.atoms[0,0:i+1],
+						self.atoms[1,0:i+1], 
+						c="darkslateblue",linewidth = 4, markersize=16, marker='o'
+						)
+						
+					#History and Location
+					plt.plot(
+						self.atoms[0,i],
+						self.atoms[1,i], 
+						c="white", marker='o', markersize=20, linestyle = 'none'
+						)
+					plt.plot(
+						self.atoms[0,i],
+						self.atoms[1,i], 
+						c="tab:blue", marker='o', markersize=16
+						)
+			
 			frame1.axes.xaxis.set_visible(False)
 			frame1.axes.yaxis.set_visible(False)
-			plt.savefig( # save transparent png
-				pl.Path(f'{filename_base}.{file_type}'), 
-				transparent=True
-				)
+			self.plot_filenames.append( # store filenames
+				pl.Path(f'{filename_base}_{i}.{file_type}')
+			)
 			
+			plt.savefig( # save transparent png
+			self.plot_filenames[i], 
+			transparent=True
+			)
 			frame1.clear()
+
 
 		return self
 
@@ -175,10 +177,10 @@ class metavid:
 		time_range = self.time_range_i(atom_index)
 		self.overlay_plot(image,time_range)
 
-	def overlay_all_plots(self,starting_scene_i=0,fig_type=3,filename_base=None):
+	def overlay_all_plots(self,starting_scene_i=0,fig_type=3,filename_base=None, file_type = 'png'):
 		# overlays all atom plots on scenes starting with index starting_scene_i
 		if not len(self.plot_filenames) > 0:
-			self.plot(fig_type=fig_type,filename_base=filename_base)
+			self.plot(fig_type=fig_type,filename_base=filename_base,file_type=file_type)
 		scene_atom_i = range( # scene index for atom
 			starting_scene_i,
 			self.n_atoms+starting_scene_i
