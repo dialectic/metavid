@@ -90,12 +90,12 @@ class metavid:
 						c="darkslateblue", linewidth = 4
 					)
 					plt.plot(
-						self.atoms[0,0:i+1],
-						self.atoms[1,0:i+1], 
+						self.atoms[0,:],
+						self.atoms[1,:], 
 						c="darkslateblue", marker='o', markersize=16,linestyle = 'none'
 						)
 				
-				else: #w. History
+				else:#w. History
 					#Spline	
 					totSplineT = np.linspace(0, totSize-1, 500)
 					totSplineCoord = totSpline(totSplineT)
@@ -104,7 +104,12 @@ class metavid:
 						totSplineCoord[1,:], 
 						c="darkslateblue", linewidth = 4
 						)
-		            
+					plt.plot(
+							self.atoms[0,:],
+							self.atoms[1,:], 
+							c="darkslateblue", marker='o', markersize=14,linestyle = 'none'
+							)
+					
 		            # Gray Spline
 					# Coordinates
 					oldBaseX = self.atoms[0,0:i+1]
@@ -131,8 +136,8 @@ class metavid:
 						)
 					if i>0:
 						plt.plot(
-							self.atoms[0,0:i-1],
-							self.atoms[1,0:i-1], 
+							self.atoms[0,0:i],
+							self.atoms[1,0:i], 
 							c="silver", marker='o', markersize=16,linestyle = 'none'
 							)
 
@@ -147,9 +152,9 @@ class metavid:
 						
 					#History and Location
 					plt.plot(
-						self.atoms[0,i],
-						self.atoms[1,i], 
-						c="darkslateblue", marker='o', markersize=16
+						self.atoms[0,:],
+						self.atoms[1,:], 
+						c="darkslateblue", marker='o', markersize=16, linestyle = 'none'
 						)
 			
 			frame1.axes.xaxis.set_visible(False)
