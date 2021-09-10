@@ -17,7 +17,7 @@ mv.load_atoms('chi_pred.pkl')
 # make plots and overlay
 
 mv.overlay_all_plots(
-	starting_scene_i=1, fig_type = 2, filename_base='testFigs/plot_', file_type = 'png'# so first (i=0) scene doesn't get a plot
+	starting_scene_i=1, fig_type = 3, filename_base='testFigs/plot_', file_type = 'png'# so first (i=0) scene doesn't get a plot
 )
 
 mv.plot(filename_base='testFigs/singleOut/plot_ty_1',fig_type=1, file_type='pdf')
