@@ -2,6 +2,8 @@ import ffmpeg
 import pathlib as pl
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+sys.path.append("..") # Adds higher directory to python modules path.
 from metavid import metavid
 import pickle
 
