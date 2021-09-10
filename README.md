@@ -1,5 +1,5 @@
 # metavid
-=========
+---------
 
 A library of tools for creating/managing videos with metastimuli elements. 
 
