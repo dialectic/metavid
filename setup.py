@@ -8,7 +8,7 @@ License :: OSI Approved :: BSD License
 
 Programming Language :: Python :: 3.6
 Topic :: Software Development
-Topic :: Artistic Software
+Topic :: HCI
 Operating System :: Microsoft :: Windows
 Operating System :: POSIX
 Operating System :: Unix
