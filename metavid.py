@@ -175,10 +175,10 @@ class metavid:
 		time_range = self.time_range_i(atom_index)
 		self.overlay_plot(image,time_range)
 
-	def overlay_all_plots(self,starting_scene_i=0):
+	def overlay_all_plots(self,starting_scene_i=0,fig_type=3,filename_base=None):
 		# overlays all atom plots on scenes starting with index starting_scene_i
 		if not len(self.plot_filenames) > 0:
-			self.plot()
+			self.plot(fig_type=fig_type,filename_base=filename_base)
 		scene_atom_i = range( # scene index for atom
 			starting_scene_i,
 			self.n_atoms+starting_scene_i
