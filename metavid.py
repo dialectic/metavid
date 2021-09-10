@@ -3,7 +3,6 @@ import pathlib as pl
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy
 import platform
 import re
 import pickle

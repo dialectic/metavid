@@ -16,7 +16,7 @@ Operating System :: MacOS
 """
 
 setup(
-    name='artpy',
+    name='metavid',
     version=' 0.1',
     author='Dr. Rico Picone',
     author_email='rpicone@stmartin.edu',
